@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            "The Calculator"
+        </title>
+
+    </head>
+
+    <body>
+
+    <h1>Project Finale: Foundations</h1>
+    <div id="container">
+      <div class="content"></div>
+    </div>
+         <!-- the HTML file -->
+         <!-- METHODS 2 & 3 -->
+       <div
+    
+        id="output" placeholder="do a calculation!">
+       </div>
+       <div class="output-content">
+        <div class="num-ops">
+        <button value="1">1</button>
+        <button value="2">2</button>
+        <button value="3">3</button>
+        <button value="4">4</button>
+        <button value="5">5</button>
+        <button value="6">6</button>
+        <button value="7">7</button>
+        <button value="8">8</button>
+        <button value="9">9</button>
+        <button value="0">0</button>
+        <button value="+">+</button>
+        <button value="-">-</button>
+        <button value="*">*</button>
+        <button value="/">/</button>
+       </div>
+       <div class="operate">
+        <button value="=">=</button>
+       </div>
+        <button id="clear" value="clear">clear
+        </button>
+       </div>
+  
+    </body>
+
+    <script>
+      console.log("Let\'s get it!");
+      
+ 
+// Functions Calculation
+
+// add
+const add = function(a, b) {
+const sum = a + b;
+return sum
+
+};
+
+
+// subtract
+const subtract = function(a, b) {
+const sum = (a - b);
+return sum
+};
+
+
+
+
+// multiply 
+const multiply = function(a, b) {
+const sum = (a * b);
+return sum
+};
+
+
+
+
+// const multiply2 = function(arr) {
+// return arr.reduce((total, input) => total * input, 1)
+// };
+// const testMultiply = multiply([2, 4, 6, 8, 10, 12, 14]);
+// console.log(testMultiply);
+
+
+// divide
+const divide = function(a, b) {
+let sumDivide = (a / b);
+return sumDivide
+}
+
+
+// // sum
+// const sum = function(arr) {
+// return arr.reduce((total, input) => total + input, 0);
+// }
+
+// testSum = sum([2, 3, 5, 9, 100]);
+// console.log(testSum);
+
+
+// power raised
+// const power = function(arr) {
+// return arr.reduce(function(total, input){
+// let sumPower = total ** input;
+// return sumPower;
+// }
+// )  
+// }
+// const testPower = power([4, 3])
+// console.log(testPower)
+
+// step 2 - variables 
+
+
+let a = '';
+let operator = '';
+let b = '';
+
+function operate (a, operator, b) {
+if (operator === '+') {
+return add(a, b);
+} else if (operator === '-') {
+return subtract(a, b);
+} else if (operator === '*') {
+return multiply(a, b)
+} else if (operator === '/') {
+if (b === 0) {
+return 'error'
+} else {
+return divide(a, b)
+}
+}
+}
+
+
+
+
+function isOperator(value) {
+  return (value === '+' || value === '-' || value === '*' || value === '/')
+}
+
+function performCalc(value) {
+  return value === '='
+}
+
+
+const btns = document.querySelectorAll('button');
+
+
+btns.forEach(button => {
+button.addEventListener('click', function() {
+const output = document.getElementById('output');
+
+if(this.value === 'clear') {
+  a = '';
+  b = '';
+  operator = '';
+  output.textContent = '';
+  return
+}
+
+if (!operator && !isOperator(this.value) && !performCalc(this.value)) {
+  a += this.value;
+  output.textContent += this.value;
+  console.log(`A: ${a}`)
+  return
+}
+
+if (isOperator(this.value)) {
+
+if (a && b) {
+ 
+  let result = operate(Number(a), operator, Number(b))
+  
+  console.log(`Calculating: ${a} ${operator} ${b}`)
+  if (isNaN(result)) {
+    output.textContent = 'Error'
+    console.log('Result is Error - NaN');
+  }
+  else {
+    output.textContent = `${result}`
+    console.log(`Result: ${result}`);
+    
+  
+  a = result.toString();
+  b = '';
+    operator = this.value;
+    output.textContent = ` ${a} ${operator} `
+    console.log(`${result}`);
+    
+}}
+else if (a && !b) {
+operator = this.value;
+output.textContent += ` ${operator} `;
+console.log( `Operator: ${operator}`)
+}
+  
+ return }
+
+if (operator && !isOperator(this.value) && !performCalc(this.value)) {
+  if (a && operator) {
+  b += this.value;
+  output.textContent += this.value
+  console.log(`B: ${b}`); 
+  return
+  }
+}
+// what indicates 'b' ending? coz its always b=NaN
+
+
+
+if (performCalc(this.value)) {
+    if (a && b && operator) {
+      console.log(`Calculating: ${a} ${operator} ${b}`)
+     
+      let result = operate(Number(a), operator, Number(b))
+      if (isNaN(result)) {
+        output.textContent = 'Error'
+        console.log('Result is Error - NaN');
+      } 
+      else {
+        output.textContent = `${result}`
+        console.log(`Result: ${result}`)
+    a = result.toString();  
+    b = '';
+    operator = '';
+    }
+  }  
+}
+
+
+
+
+
+})})
+
+
+
+
+
+
+
+
+  </script>
+</html>
